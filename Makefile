@@ -2,7 +2,7 @@ CFLAGS=-fomit-frame-pointer -O2 -s -g -Wall
 timeoutd:	timeoutd.c Makefile
 	#$(CC) $(CFLAGS) -o timeoutd timeoutd.c
 	$(CC) $(CFLAGS) -o timeoutd.o -c timeoutd.c -DTIMEOUTDX11
-	$(CC) $(CFLAGS) -o timeoutd -L/usr/X11R6/lib timeoutd.o -lXss -lXext
+	$(CC) $(CFLAGS) -o timeoutd -L/usr/X11R6/lib timeoutd.o -lXss -lXext -lX11
 	
 
 install:
