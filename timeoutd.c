@@ -398,6 +398,7 @@ void read_wtmp()
     FILE	*fp;
     struct utmp	ut;
     struct tm	*tm;
+    time_t time;
 
 #ifdef DEBUG
     openlog("timeoutd", OPENLOG_FLAGS, LOG_DAEMON);
@@ -418,7 +419,13 @@ void read_wtmp()
 
     while (fread(&ut, sizeof(struct utmp), 1, fp) == 1)
     {
-      tm = localtime(&ut.ut_time);
+      /* On 64 bit systems time_t is a 64 bit integer
+         while ut_time is a 32 bit (unsigned) integer.
+	 Copy the value to a time_t value so the pointer
+         types agree in the call to localtime.
+       */
+      time = ut.ut_time;
+      tm = localtime(&time);
 
       if (tm->tm_year != now.tm_year || tm->tm_yday != now.tm_yday)
         break;
