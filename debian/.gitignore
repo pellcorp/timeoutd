@@ -1,0 +1,7 @@
+files
+timeoutd.debhelper.log
+timeoutd.postinst.debhelper
+timeoutd.postrm.debhelper
+timeoutd.prerm.debhelper
+timeoutd.substvars
+timeoutd
