@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 4), libx11-dev, libxss-dev
 
 Package: timeoutd
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends} 
 Conflicts: suidmanager (<< 0.50)
 Description: Flexible user timeout daemon with X11 support
  timeoutd enforces the time restrictions specified for each or all users.
