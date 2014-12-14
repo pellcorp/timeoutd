@@ -16,6 +16,8 @@ DESC="user timeout daemon"
 
 test -x $DAEMON || exit 0
 
+. /lib/lsb/init-functions
+
 set -e
 
 case "$1" in

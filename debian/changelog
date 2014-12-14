@@ -1,4 +1,4 @@
-timeoutd (1.5-10.1ubuntu1~2.93b017313) UNRELEASED; urgency=low
+timeoutd (1.5-10.2) unstable; urgency=low
   * Non-maintainer upload
   * Resolve the missing symbol XOpenDisplay by linking with libX11
   * Update debian/control Standards-Version: 3.9.5 
