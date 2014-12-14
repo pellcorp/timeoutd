@@ -1,4 +1,4 @@
-CFLAGS=-fomit-frame-pointer -O2 -s -g -Wall
+CFLAGS=-fomit-frame-pointer -O2 -s -g -Wall -Wno-unused-result
 timeoutd:	timeoutd.c Makefile
 	#$(CC) $(CFLAGS) -o timeoutd timeoutd.c
 	$(CC) $(CFLAGS) -o timeoutd.o -c timeoutd.c -DTIMEOUTDX11
