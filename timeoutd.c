@@ -126,7 +126,7 @@ struct utmp *getutent()    /* returns next utmp file entry */
 #define	DAYMSG		2
 #define	NOLOGINMSG	3
 
-#define KWAIT		5  /* Time to wait after sending a kill signal */
+#define KWAIT		10  /* Time to wait after sending a kill signal */
 
 char	*limit_names[] = {"idle", "session", "daily", "nologin"};
 
@@ -427,8 +427,10 @@ void read_wtmp()
       time = ut.ut_time;
       tm = localtime(&time);
 
-      if (tm->tm_year != now.tm_year || tm->tm_yday != now.tm_yday)
+      /* disable this as it breaks logic if user is on near to midnight */
+      /*if (tm->tm_year != now.tm_year || tm->tm_yday != now.tm_yday)
         break;
+      */
 
 #ifndef SUNOS
       if (ut.ut_type == USER_PROCESS ||
@@ -870,7 +872,7 @@ char *host;
 
   	/* then send the message using xmessage */
   	/* well, this is not really clean: */
-  	sprintf(cmdbuf, "su %s -c \"xmessage -display %s -center 'WARNING: You will be logged out in %d minute%s when your %s limit expires.'&\"", user, host, time_remaining, time_remaining==1?"":"s", limit_names[limit_type]);
+  	sprintf(cmdbuf, "su %s -c \"gxmessage -display %s -center 'WARNING: You will be logged out in %d minute%s when your %s limit expires.'&\"", user, host, time_remaining, time_remaining==1?"":"s", limit_names[limit_type]);
   	system(cmdbuf);
   	/*#ifdef DEBUG*/
 	    openlog("timeoutd", OPENLOG_FLAGS, LOG_DAEMON);
@@ -1447,7 +1449,7 @@ char *host, *user;
 
   /* then send the message using xmessage */
   /* well, this is not really clean: */
-  sprintf(cmdbuf, "su %s -c \"xmessage -display %s -center '%s'&\"", user, host, msgbuf);
+  sprintf(cmdbuf, "su %s -c \"gxmessage -display %s -center '%s'&\"", user, host, msgbuf);
   system(cmdbuf);
   #ifdef DEBUG
 	    openlog("timeoutd", OPENLOG_FLAGS, LOG_DAEMON);
@@ -1458,19 +1460,8 @@ char *host, *user;
 	    
 
   #ifndef DEBUG	
-  /* kill pid here */
-    kill(pid, SIGTERM);  /* otherwise, X crashes */
-    sleep(KWAIT);
-    if (!kill(pid, 0)) {    /* SIGHUP might be ignored */
-        kill(pid, SIGKILL); /* then send sure "kill" signal */
-        sleep(KWAIT);
-        if (!kill(pid, 0))
-        {
-	    openlog("timeoutd", OPENLOG_FLAGS, LOG_DAEMON);
-            syslog(LOG_ERR, "Could not log user %s off line %s. (running X)", user, host);
-            closelog();
-        }
-    }
+     sprintf(cmdbuf, "su %s -c \"gnome-session-quit --no-prompt\"", user, host, msgbuf);
+     system(cmdbuf);
   #else
   openlog("timeoutd", OPENLOG_FLAGS, LOG_DAEMON);
   syslog(LOG_ERR, "Would normally logoff user %s running X (kill PID %d)", user, pid);

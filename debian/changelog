@@ -1,3 +1,9 @@
+timeoutd (1.5-10.3) unstable; urgency=low
+  * Non-maintainer upload
+  * Update to support gnome 3 only
+
+ -- Jason Pell <jason@pellcorp.com>  Wed, 20 Mar 2019 09:28:59 +1000
+
 timeoutd (1.5-10.2) unstable; urgency=low
   * Non-maintainer upload
   * Resolve the missing symbol XOpenDisplay by linking with libX11

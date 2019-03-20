@@ -12,20 +12,24 @@ each tty on your system:
 To build timeoutd, you should make any changes to the makefile for
 your preferred compilation options, then simply:
 
+Note for Ubuntu, you need to install:
+
+sudo apt-get install libxss-dev libx11-dev
+
 make
 
-The next step is to install a timeouts file in /usr/etc specifying
+The next step is to install a timeouts file in /etc specifying
 the parameters for each line/user/group combination.  You can use
 the sample file provided in the distribution as a starting point
 after reading the timeoutd.8 and timeouts.5 man pages.
 
-Once you have installed the timeouts file in /usr/etc, you can type:
+Once you have installed the timeouts file in /etc, you can type:
 
 make install
 
 to install the timeoutd binaries and man pages.
 
-Then it is just a matter of running /usr/etc/timeoutd.  You may want
+Then it is just a matter of running /usr/sbin/timeoutd.  You may want
 to add a line to your /etc/rc or /etc/rc.local (or whatever) to run
 timeoutd at boot time.
 
@@ -37,8 +41,11 @@ Otherwise, users who are not allowed to login will be logged off within
 Another (albeit less certain) way of doing this is to put the following
 line in /etc/profile near the top of the file:
 
-/usr/etc/timeoutd `whoami` `basename \`tty\`` || exit
-
+/usr/sbin/timeoutd `whoami` `basename \`tty\`` || exit
 
 Please sends bugs, comments, suggestions to:
 shanea@bigpond.net.au (Shane Alderton)
+
+To build the debian package you need to run:
+
+debuild -uc -us

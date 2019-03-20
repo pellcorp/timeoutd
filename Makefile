@@ -3,9 +3,10 @@ timeoutd:	timeoutd.c Makefile
 	#$(CC) $(CFLAGS) -o timeoutd timeoutd.c
 	$(CC) $(CFLAGS) -o timeoutd.o -c timeoutd.c -DTIMEOUTDX11
 	$(CC) $(CFLAGS) -o timeoutd -L/usr/X11R6/lib timeoutd.o -lXss -lXext -lX11
-	
 
 install:
-	install -o root -g system -m 2111 timeoutd /usr/etc/timeoutd
-	install -o man -g info -m 444 timeoutd.8 /usr/man/man8
-	install -o man -g info -m 444 timeouts.5 /usr/man/man5
+	install -o root -g adm -m 2111 timeoutd /usr/sbin
+	install -o root -g adm -m 2111 timeoutd.service /lib/systemd/system
+	install -o man -g man -m 444 timeoutd.8 /usr/share/man/man8
+	install -o man -g man -m 445 timeouts.5 /usr/share/man/man5
+

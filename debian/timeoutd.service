@@ -1,0 +1,11 @@
+[Unit]
+Description=Timeoutd service
+
+[Service]
+Restart=always
+Type=forking
+ExecStart=/usr/sbin/timeoutd
+
+[Install]
+WantedBy=multi-user.target
+
